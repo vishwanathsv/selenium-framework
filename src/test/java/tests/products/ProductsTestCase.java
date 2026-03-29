@@ -2,22 +2,20 @@ package tests.products;
 
 import base.BaseTest;
 import org.testng.Assert;
-import org.testng.annotations.BeforeTest;
+import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import pages.InventoryPage;
-import pages.LoginPage;
 
 public class ProductsTestCase extends BaseTest {
 
     InventoryPage inventory;
 
-    @BeforeTest
-    public void loginSetup() {
-        LoginPage page = new LoginPage(driver);
-        page.openLoginPage();
-        page.login("standard_user", "secret_sauce");
+    @BeforeMethod
+    public void pageSetup() {
+        // Initialize InventoryPage AFTER login
         inventory = new InventoryPage(driver);
     }
+
 
     @Test
     public void verifyProductPageLoads() {
@@ -28,5 +26,16 @@ public class ProductsTestCase extends BaseTest {
     @Test
     public void verifyProductsAreListed() {
         Assert.assertTrue(inventory.getProductCount() > 0, "No Products found");
+    }
+
+    @Test
+    public void verifyProductDetails() {
+        Assert.assertTrue(inventory.areAllProductsValid(), "Invalid product details.");
+    }
+
+    @Test
+    public void verifySortByNameAscending() {
+        inventory.sortBy("Price (low to high)");
+        Assert.assertTrue(inventory.isSortedByPriceAsc());
     }
 }
