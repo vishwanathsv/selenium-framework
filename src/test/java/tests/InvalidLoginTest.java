@@ -9,8 +9,8 @@ public class InvalidLoginTest extends BaseTest {
     @Test
     public void inValidLogin()
     {
-        driver.get("https://the-internet.herokuapp.com/login");
         LoginPage page=new LoginPage(driver);
+        page.openLoginPage();
         page.enterUserName("wrongUserName");
         page.enterPassword("wrongPassword");
         page.clickLogin();
