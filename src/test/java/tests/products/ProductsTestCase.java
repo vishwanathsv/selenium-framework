@@ -3,9 +3,12 @@ package tests.products;
 import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
 import pages.InventoryPage;
+import utils.TestListener;
 
+@Listeners(TestListener.class)
 public class ProductsTestCase extends BaseTest {
 
     InventoryPage inventory;
