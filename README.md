@@ -2,13 +2,13 @@
 
 ## 📌 Project Overview
 
-This project is a **basic Selenium automation framework** built using **Java + TestNG** following the **Page Object Model (POM)** design pattern.
+This project is a **Selenium automation framework** built using **Java + TestNG**, following the **Page Object Model (POM)** design pattern.
 
 It demonstrates:
 
-* UI automation for login functionality
-* Positive and negative test scenarios
-* Clean and maintainable test structure
+* UI automation for login and product pages
+* Data-driven testing (Properties, JSON, Excel)
+* Scalable and maintainable framework structure
 
 ---
 
@@ -19,6 +19,8 @@ It demonstrates:
 * TestNG
 * Maven
 * IntelliJ IDEA
+* Apache POI (Excel handling)
+* Gson (JSON handling)
 
 ---
 
@@ -26,18 +28,29 @@ It demonstrates:
 
 ```
 src/
- ├── base/
- │     └── BaseTest.java
- │
- ├── pages/
- │     └── LoginPage.java
- │
- ├── tests/
- │     ├── LoginTest.java
- │     ├── InvalidLoginTest.java
- │     ├── LogOutTest.java
- │     ├── NavigationTest.java
- │     └── UIElementsTest.java
+├── main/
+│   └── java/
+│       ├── base/
+│       │     └── BaseTest.java
+│       ├── pages/
+│       │     ├── LoginPage.java
+│       │     └── InventoryPage.java
+│       └── utils/
+│             ├── ConfigReader.java
+│             └── JsonUtils.java
+│
+├── test/
+│   ├── java/
+│   │   └── tests/
+│   │       ├── LoginTest.java
+│   │       └── products/
+│   │           └── ProductsTestCase.java
+│   │
+│   └── resources/
+│       ├── config.properties
+│       └── testdata/
+│           ├── users.json
+│           └── testdata.xlsx
 ```
 
 ---
@@ -47,27 +60,60 @@ src/
 ### 🔹 BaseTest
 
 * Handles browser setup and teardown
-* Uses TestNG annotations (`@BeforeMethod`, `@AfterMethod`)
+* Reads configuration from `config.properties`
+* Performs common login setup
+
+---
 
 ### 🔹 Page Layer (POM)
 
-* `LoginPage` contains all UI interactions
-* Locators + reusable methods
+* `LoginPage` → handles login actions
+* `InventoryPage` → handles product-related actions
+
+Includes:
+
+* Locators
+* Reusable methods
+* Page-specific validations
+
+---
+
+### 🔹 Utils Layer
+
+* `ConfigReader` → reads data from properties file
+* `JsonUtils` → reads test data from JSON
+* (Future) `ExcelUtils` → reads Excel test data
+
+---
 
 ### 🔹 Test Layer
 
 * Contains actual test scenarios
-* Uses page methods to perform actions
+* Uses Page classes for actions
+* Uses assertions for validations
 
 ---
 
 ## ✅ Test Scenarios Covered
 
-* ✔ Valid Login Test
-* ✔ Invalid Login Test
-* ✔ Logout Test
-* ✔ UI Elements Validation (planned)
-* ✔ Navigation Test (planned)
+### 🔐 Login
+
+* ✔ Valid Login
+* ✔ Invalid Login
+* ✔ Logout
+
+---
+
+### 🛒 Products / Inventory
+
+* ✔ Verify product page loads
+* ✔ Verify products are listed
+* ✔ Validate product details
+* ✔ Sort by price (Low → High)
+* ✔ Add product to cart
+* ✔ Remove product from cart
+* ✔ Cart navigation
+* ✔ Product detail navigation
 
 ---
 
@@ -81,11 +127,10 @@ git clone https://github.com/vishwanathsv/selenium-framework.git
 
 2. Open in IntelliJ IDEA
 
-3. Run tests using:
+3. Run tests:
 
 * Right click → Run TestNG test
   OR
-* Run via Maven:
 
 ```
 mvn test
@@ -95,30 +140,27 @@ mvn test
 
 ## 🔍 Sample Test Flow
 
-1. Open login page
-2. Enter username & password
-3. Click login
-4. Validate success/error message
+1. Open application URL
+2. Login using credentials from config file
+3. Perform actions (add/remove/sort products)
+4. Validate expected behavior
 
 ---
 
 ## 📸 Application Under Test
 
-Test site:
-
-```
-https://the-internet.herokuapp.com/login
-```
+* https://www.saucedemo.com
+* https://the-internet.herokuapp.com/login
 
 ---
 
 ## 🚀 Future Improvements
 
-* Add BasePage (common reusable methods)
-* Implement WebDriverWait (explicit waits)
+* Add `BasePage` for common methods
+* Implement Explicit Waits (WebDriverWait)
 * Add logging (Log4j)
-* Generate reports (Extent Reports)
-* Cross-browser testing
+* Integrate Extent Reports
+* Cross-browser execution
 * CI/CD integration (Jenkins)
 
 ---
