@@ -22,7 +22,16 @@ public class InventoryPage {
     By products = By.xpath("//span[text()='Products']");
     By productTitles = By.className("inventory_item_name");
     By productPrices = By.className("inventory_item_price");
+    By productDescriptions = By.className("inventory_item_desc");
+    By productImages = By.className("inventory_item_img");
     By sortDropdown = By.className("product_sort_container");
+    By addToCartButtons = By.xpath("//button[text()='Add to cart']");
+    By removeButtons = By.xpath("//button[text()='Remove']");
+    By addBackpackToCart = By.id("add-to-cart-sauce-labs-backpack");
+    By removeBackpack = By.id("remove-sauce-labs-backpack");
+    By cartIcon = By.className("shopping_cart_link");
+    By cartBadge = By.className("shopping_cart_badge");
+
 
     //constructor
     public InventoryPage(WebDriver driver) {
@@ -34,6 +43,14 @@ public class InventoryPage {
         return driver.findElement(productTitle).getText();
     }
 
+    public int getCartCount() {
+        List<WebElement> badge = driver.findElements(cartBadge);
+        if (badge.isEmpty()) {
+            return 0;
+        }
+        return Integer.parseInt(badge.get(0).getText());
+    }
+
     public int getProductCount() {
         return driver.findElements(productTitles).size();
     }
@@ -43,6 +60,15 @@ public class InventoryPage {
         driver.findElement(menuButton).click();
     }
 
+    public void addFirstProductToCart() {
+        driver.findElements(addToCartButtons).get(0).click();
+    }
+
+    public void removeFirstProduct() {
+        this.addFirstProductToCart();
+        this.openCart();
+        driver.findElements(removeButtons).get(0).click();
+    }
 
     public void clickButtonByName(String name) {
         WebDriverWait wait = new WebDriverWait(driver, Duration.ofSeconds(5));
@@ -54,6 +80,13 @@ public class InventoryPage {
         select.selectByVisibleText(option);
     }
 
+    public void openCart() {
+        driver.findElement(cartIcon).click();
+    }
+
+    public void openFirstProduct() {
+        driver.findElements(productTitles).get(0).click();
+    }
 
     //verification methods
     public boolean isProductsDisplayed() {
@@ -71,7 +104,20 @@ public class InventoryPage {
         List<Double> sorted = new ArrayList<>(actual);
         Collections.sort(sorted);
         return actual.equals(sorted);
+    }
 
+    public boolean isSortedByNameAsc() {
+        List<String> actual = driver.findElements(productTitles).stream().map(e -> e.getText()).toList();
+        List<String> sorted = new ArrayList<>(actual);
+        Collections.sort(sorted);
+        return actual.equals(sorted);
+    }
+
+    public boolean isSortedByNameDesc() {
+        List<String> actual = driver.findElements(productTitles).stream().map(e -> e.getText()).toList();
+        List<String> sorted = new ArrayList<>(actual);
+        Collections.sort(sorted, Collections.reverseOrder());
+        return actual.equals(sorted);
     }
 
 }

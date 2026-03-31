@@ -5,6 +5,7 @@ import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import pages.LoginPage;
+import utils.ConfigReader;
 
 public class BaseTest {
     protected WebDriver driver;
@@ -15,7 +16,7 @@ public class BaseTest {
         driver.manage().window().maximize();
         LoginPage page = new LoginPage(driver);
         page.openLoginPage();
-        page.login("standard_user", "secret_sauce");
+        page.login(ConfigReader.get("username"), ConfigReader.get("password"));
     }
 
     @AfterMethod

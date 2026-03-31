@@ -38,4 +38,42 @@ public class ProductsTestCase extends BaseTest {
         inventory.sortBy("Price (low to high)");
         Assert.assertTrue(inventory.isSortedByPriceAsc());
     }
+
+    @Test
+    public void verifyAddToCart() {
+        inventory.addFirstProductToCart();
+        Assert.assertEquals(inventory.getCartCount(), 1);
+    }
+
+    @Test
+    public void verifyRemoveFromCart() {
+        inventory.removeFirstProduct();
+        Assert.assertEquals(inventory.getCartCount(), 0);
+    }
+
+    @Test
+    public void verifyCartNavigation() {
+        inventory.openCart();
+        Assert.assertTrue(driver.getCurrentUrl().contains("cart"));
+    }
+
+    @Test
+    public void verifyProductNavigation() {
+        inventory.openFirstProduct();
+        Assert.assertTrue(driver.getCurrentUrl().contains("inventory-item"));
+    }
+
+    @Test
+    public void verifySortByNameAZ() {
+        inventory.sortBy("Name (A to Z)");
+        Assert.assertTrue(inventory.isSortedByNameAsc());
+    }
+
+    @Test
+    public void verifySortByNameZA() {
+        inventory.sortBy("Name (Z to A)");
+        Assert.assertTrue(inventory.isSortedByNameDesc());
+    }
+
+
 }
