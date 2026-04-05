@@ -2,34 +2,46 @@ package api.base;
 
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.builder.ResponseSpecBuilder;
+import io.restassured.filter.log.RequestLoggingFilter;
+import io.restassured.filter.log.ResponseLoggingFilter;
 import io.restassured.http.ContentType;
 import io.restassured.specification.RequestSpecification;
 import io.restassured.specification.ResponseSpecification;
+import utils.ConfigReader;
 
 public class ApiBaseTest {
 
-    public static RequestSpecification requestSpec;
-    public static ResponseSpecification responseSpec;
+    private static RequestSpecification requestSpec;
+    private static ResponseSpecification responseSpec;
 
-    // Base URL (change this to your API)
-    public static String baseUrl = "https://reqres.in";
+    public static RequestSpecification getRequestSpec() {
 
-    static {
+        if (requestSpec == null) {
 
-        // -------------------------
-        // REQUEST SPECIFICATION
-        // -------------------------
-        requestSpec = new RequestSpecBuilder()
-                .setBaseUri(baseUrl)
-                .setContentType(ContentType.JSON)
-                .addHeader("Accept", "application/json")
-                .build();
+            requestSpec = new RequestSpecBuilder()
+                    .setBaseUri(ConfigReader.get("api.baseUrl"))
+                    .setContentType(ContentType.JSON)
+                    .addHeader("Accept", "application/json")
 
-        // -------------------------
-        // RESPONSE SPECIFICATION
-        // -------------------------
-        responseSpec = new ResponseSpecBuilder()
-                .expectContentType(ContentType.JSON)
-                .build();
+                    .addFilter(new RequestLoggingFilter())
+                    .addFilter(new ResponseLoggingFilter())
+
+                    .build();
+        }
+
+        return requestSpec;
+    }
+
+
+    public static ResponseSpecification getResponseSpec() {
+
+        if (responseSpec == null) {
+
+            responseSpec = new ResponseSpecBuilder()
+                    .expectContentType(ContentType.JSON)
+                    .build();
+        }
+
+        return responseSpec;
     }
 }
