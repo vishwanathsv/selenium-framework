@@ -14,5 +14,6 @@ public class UIelementsTest extends BaseTest {
         page.login("standard_user", "secret_sauce");
         InventoryPage inventory = new InventoryPage(driver);
         Assert.assertTrue(inventory.isProductsDisplayed(), "Product not displayed");
+        Assert.assertTrue(inventory.isProductsDisplayed(), "Product not displayed");
     }
 }
