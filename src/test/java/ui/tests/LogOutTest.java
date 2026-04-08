@@ -1,10 +1,10 @@
-package tests;
+package ui.tests;
 
-import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.InventoryPage;
-import pages.LoginPage;
+import ui.base.BaseTest;
+import ui.pages.InventoryPage;
+import ui.pages.LoginPage;
 
 public class LogOutTest extends BaseTest {
     @Test

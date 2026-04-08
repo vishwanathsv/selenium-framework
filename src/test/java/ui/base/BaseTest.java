@@ -1,10 +1,10 @@
-package base;
+package ui.base;
 
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
-import pages.LoginPage;
+import ui.pages.LoginPage;
 import utils.ConfigReader;
 
 public class BaseTest {

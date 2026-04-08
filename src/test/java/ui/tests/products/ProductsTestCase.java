@@ -1,11 +1,11 @@
-package tests.products;
+package ui.tests.products;
 
-import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Listeners;
 import org.testng.annotations.Test;
-import pages.InventoryPage;
+import ui.base.BaseTest;
+import ui.pages.InventoryPage;
 import utils.TestListener;
 
 @Listeners(TestListener.class)

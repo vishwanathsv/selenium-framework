@@ -10,38 +10,24 @@ import io.restassured.specification.ResponseSpecification;
 import utils.ConfigReader;
 
 public class ApiBaseTest {
+    private static RequestSpecification requestSpecification;
+    private static ResponseSpecification responseSpecification;
 
-    private static RequestSpecification requestSpec;
-    private static ResponseSpecification responseSpec;
+    public static RequestSpecification getRequestSpecification() {
+        if (requestSpecification == null) {
+            requestSpecification = new RequestSpecBuilder().setBaseUri(ConfigReader.get("api.baseUrl")).setContentType(ContentType.JSON).addHeader("Accept", "application/json").addFilter(new RequestLoggingFilter()).addFilter(new ResponseLoggingFilter()).build();
 
-    public static RequestSpecification getRequestSpec() {
-
-        if (requestSpec == null) {
-
-            requestSpec = new RequestSpecBuilder()
-                    .setBaseUri(ConfigReader.get("api.baseUrl"))
-                    .setContentType(ContentType.JSON)
-                    .addHeader("Accept", "application/json")
-
-                    .addFilter(new RequestLoggingFilter())
-                    .addFilter(new ResponseLoggingFilter())
-
-                    .build();
         }
+        return requestSpecification;
 
-        return requestSpec;
     }
 
-
-    public static ResponseSpecification getResponseSpec() {
-
-        if (responseSpec == null) {
-
-            responseSpec = new ResponseSpecBuilder()
-                    .expectContentType(ContentType.JSON)
-                    .build();
+    public static ResponseSpecification getResponseSpecification() {
+        if (responseSpecification == null) {
+            responseSpecification = new ResponseSpecBuilder().expectContentType(ContentType.JSON).build();
         }
-
-        return responseSpec;
+        return responseSpecification;
     }
+
 }
+

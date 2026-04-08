@@ -1,9 +1,9 @@
-package tests;
+package ui.tests;
 
-import base.BaseTest;
 import org.testng.Assert;
 import org.testng.annotations.Test;
-import pages.LoginPage;
+import ui.base.BaseTest;
+import ui.pages.LoginPage;
 
 public class LoginTest extends BaseTest {
 
@@ -14,9 +14,8 @@ public class LoginTest extends BaseTest {
         page.enterUserName("standard_user");
         page.enterPassword("secret_sauce");
         page.clickLogin();
-         String url=driver.getCurrentUrl();
-        Assert.assertTrue(url.contains("inventory"),"url doesn't have expected path");
-
+        String url = driver.getCurrentUrl();
+        Assert.assertTrue(url.contains("inventory"), "url doesn't have expected path");
 
 
     }
